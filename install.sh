@@ -29,4 +29,6 @@ if [[ ! -z $INBOXLV_USERNAME ]]; then
 fi
 
 echo "Installing reverse ssh tunnel [invoking sudo]"
-sudo ./setup_reverse_tunnel.sh
+for TUNNEL in `sudo assets/bin/mktunnels.sh` ; do
+	echo "Tunnel: $TUNNEL"
+done
