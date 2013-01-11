@@ -7,8 +7,6 @@ fi
 SCRIPT_LOCATION="/usr/local/bin/reverse_ssh_tunnel"
 
 echo "Creating file in $SCRIPT_LOCATION"
-echo "Installing openssh-server and autossh"
-apt-get install openssh-server autossh
 echo "Randomly creating port numbers (edit these in the file to change if you want)"
 
 PORT_NUMBER=$[ ( $RANDOM % 10000 )  + 10000 ]
