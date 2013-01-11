@@ -21,5 +21,5 @@ sudo mv /etc/ssmtp/ssmtp.conf /etc/ssmtp/ssmtp.conf.old 2>/dev/null
 sudo mv /etc/ssmtp/revaliases /etc/ssmtp/revaliases.old 2>/dev/null
 
 echo "Putting new ssmtp.conf and revaliases to /etc/ssmtp/"
-sed -r "s#t4Rp07#$INBOXLV_USERNAME#;s#p455w0rd#$INBOXLV_PASSWORD#" assets/conf/ssmtp.conf | sudo tee /etc/ssmtp/ssmtp.conf
-sed -r "s#t4Rp07#$INBOXLV_USERNAME#" assets/conf/ssmtp.conf | sudo tee /etc/ssmtp/revaliases
+sed -r "s#t4Rp07#$INBOXLV_USERNAME#;s#p455w0rd#$INBOXLV_PASSWORD#" assets/conf/ssmtp.conf | sudo tee /etc/ssmtp/ssmtp.conf 1>/dev/null
+sed -r "s#t4Rp07#$INBOXLV_USERNAME#" assets/conf/ssmtp.conf | sudo tee /etc/ssmtp/revaliases 1>/dev/null
