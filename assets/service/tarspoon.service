@@ -1,0 +1,12 @@
+[Unit]
+Description=A spoon of tar in a pot of honey
+Requires=wicd.service
+Requires=logkeys.service
+After=wicd.service
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/tarspoon
+
+[Install]
+WantedBy=multi-user.target

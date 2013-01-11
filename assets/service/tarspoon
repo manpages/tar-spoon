@@ -1,0 +1,12 @@
+#!/bin/bash
+
+TICK="10"
+
+function payload {
+	echo -n "." >> /var/log/tarspoon.log
+}
+
+while true; do
+	payload
+	sleep $TICK
+done
