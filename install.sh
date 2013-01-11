@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # todo: archlinux PKGBUILD for tar-spoon
 echo "Please make sure these are installed: sudo, systemd, ssmtp, logkeys, scrot, wicd, gpg"
 echo "Logkeys can be found here: http://code.google.com/p/logkeys/source/checkout"
@@ -11,15 +13,20 @@ echo "  It's awesome for throw-away mailboxes, as it doesn't expire and tolerate
 echo "  Don't forget to allow external SMTP access here:"
 echo "  http://mail.inbox.lv/horde/imp/prefs.php?language=en&group=forward"
 
-echo -n "Inbox.lv username: "
+echo -n "Inbox.lv username (empty to skip that step): "
 read INBOXLV_USERNAME
-echo -n "Inbox.lv password: "
-read INBOXLV_PASSWORD
+if [[ ! -z $INBOXLV_USERNAME ]]; then
+	echo -n "Inbox.lv password: "
+	read INBOXLV_PASSWORD
 
-echo "Backing up existing ssmtp.conf and revaliases [invoking sudo]"
-sudo mv /etc/ssmtp/ssmtp.conf /etc/ssmtp/ssmtp.conf.old 2>/dev/null
-sudo mv /etc/ssmtp/revaliases /etc/ssmtp/revaliases.old 2>/dev/null
+	echo "Backing up existing ssmtp.conf and revaliases [invoking sudo]"
+	sudo mv /etc/ssmtp/ssmtp.conf /etc/ssmtp/ssmtp.conf.old 2>/dev/null
+	sudo mv /etc/ssmtp/revaliases /etc/ssmtp/revaliases.old 2>/dev/null
 
-echo "Putting new ssmtp.conf and revaliases to /etc/ssmtp/"
-sed -r "s#t4Rp07#$INBOXLV_USERNAME#;s#p455w0rd#$INBOXLV_PASSWORD#" assets/conf/ssmtp.conf | sudo tee /etc/ssmtp/ssmtp.conf 1>/dev/null
-sed -r "s#t4Rp07#$INBOXLV_USERNAME#" assets/conf/ssmtp.conf | sudo tee /etc/ssmtp/revaliases 1>/dev/null
+	echo "Putting new ssmtp.conf and revaliases to /etc/ssmtp/"
+	sed -r "s#t4Rp07#$INBOXLV_USERNAME#;s#p455w0rd#$INBOXLV_PASSWORD#" assets/conf/ssmtp.conf | sudo tee /etc/ssmtp/ssmtp.conf 1>/dev/null
+	sed -r "s#t4Rp07#$INBOXLV_USERNAME#" assets/conf/ssmtp.conf | sudo tee /etc/ssmtp/revaliases 1>/dev/null
+fi
+
+echo "Installing reverse ssh tunnel [invoking sudo]"
+sudo ./setup_reverse_tunnel.sh
