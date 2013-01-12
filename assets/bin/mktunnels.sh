@@ -59,4 +59,4 @@ while errcho "Enter a name for the new tunnel (to stop, press return key...)" &&
 	mktun $TUN_NAME
 done
 
-echo -n "foo bar baz"
+ls /usr/local/bin | grep tun_
