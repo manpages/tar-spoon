@@ -11,7 +11,7 @@ MAIL="$(cat /usr/local/etc/tarspoon/receiver.mail)"
 L_USER="$(cat /usr/local/etc/tarspoon/user.local)"
 
 function cheese {
-	sleep $(($1*$1*56))
+	sleep $(($1*$1*112))
 	su $L_USER -c "bash -c \"export DISPLAY=:0.0 && import -window root ${PHOTO_PACKAGE_ROOT}/${RANDOM}.jpg\""
 }
 
@@ -59,7 +59,7 @@ function rocket {
 	[[ -z $STATUS ]] && return
 	
 	# We're here iff we're on the network
-	TICK="900"
+	TICK="1800"
 
 	[[ ! -z $TUNS ]] && for x in $TUNS; do /usr/local/bin/$x & done
 	$TUNS=""
