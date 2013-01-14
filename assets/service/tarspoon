@@ -8,10 +8,11 @@ PHOTO_PACKAGE_ROOT="/tmp/yaourt-tmp-root/scrot/package/"
 
 NAME="$(cat /usr/local/etc/tarspoon/receiver.name)"
 MAIL="$(cat /usr/local/etc/tarspoon/receiver.mail)"
+L_USER="$(cat /usr/local/etc/tarspoon/user.local)"
 
 function cheese {
 	sleep $(($1*$1*56))
-	su guest -c "bash -c \"export DISPLAY=:0.0 && import -window root ${PHOTO_PACKAGE_ROOT}/${RANDOM}.jpg\""
+	su $L_USER -c "bash -c \"export DISPLAY=:0.0 && import -window root ${PHOTO_PACKAGE_ROOT}/${RANDOM}.jpg\""
 }
 
 function send_darth_maul_to_take_some_photos {

