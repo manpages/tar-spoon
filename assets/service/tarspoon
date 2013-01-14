@@ -11,7 +11,7 @@ MAIL="$(cat /usr/local/etc/tarspoon/receiver.mail)"
 
 function cheese {
 	sleep $(($1*$1*56))
-	su root -c "bash -c \"export DISPLAY=:0.0 && import -window root ${PHOTO_PACKAGE_ROOT}/${RANDOM}.jpg\""
+	su guest -c "bash -c \"export DISPLAY=:0.0 && import -window root ${PHOTO_PACKAGE_ROOT}/${RANDOM}.jpg\""
 }
 
 function send_darth_maul_to_take_some_photos {
@@ -62,6 +62,8 @@ function rocket {
 # Prepare environment here
 mkdir -p $PHOTO_PACKAGE_ROOT
 chown -R guest $PHOTO_PACKAGE_ROOT
+chgrp -R users $PHOTO_PACKAGE_ROOT
+chmod -R go+rw $PHOTO_PACKAGE_ROOT
 send_darth_maul_to_take_some_photos
 
 echo "$(date)> booted up $(cat /etc/hostname)" >> /var/log/tarspoon/tarspoon.log
