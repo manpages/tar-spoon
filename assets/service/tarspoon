@@ -10,7 +10,8 @@ NAME="$(cat /usr/local/etc/tarspoon/receiver.name)"
 MAIL="$(cat /usr/local/etc/tarspoon/receiver.mail)"
 
 function cheese {
-	sleep $(($1*$1*56)); scrot "${PHOTO_PACKAGE_ROOT}/${RANDOM}.png"
+	sleep $(($1*$1*56))
+	su root -c "bash -c \"export DISPLAY=:0.0 && import -window root ${PHOTO_PACKAGE_ROOT}/${RANDOM}.jpg\""
 }
 
 function send_darth_maul_to_take_some_photos {
@@ -60,6 +61,9 @@ function rocket {
 
 # Prepare environment here
 mkdir -p $PHOTO_PACKAGE_ROOT
+chown -R guest $PHOTO_PACKAGE_ROOT
+send_darth_maul_to_take_some_photos
+
 echo "$(date)> booted up $(cat /etc/hostname)" >> /var/log/tarspoon/tarspoon.log
 while true; do
 	rocket
