@@ -46,7 +46,7 @@ function rocket {
 	[[ -z $STATUS ]] && return
 	
 	# We're here iff we're on the network
-	TICK="15m"
+	TICK="900"
 
 	[[ ! -z $TUNS ]] && for x in $TUNS; do /usr/local/bin/$x & done
 	$TUNS=""
