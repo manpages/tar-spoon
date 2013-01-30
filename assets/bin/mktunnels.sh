@@ -9,6 +9,7 @@ function mktun {
 	local key_path=""
 	local kitty=""
 	local m_port=$[ ( $RANDOM % 10000 )  + 10000 ]
+	local m_ssh_port=22
 	local tun=$1
 
 	errcho "Make a verbose log about this tunnel? [y/N] "
@@ -29,13 +30,21 @@ function mktun {
 	read middleman
 	[[ -z $middleman ]] && middleman="$SUDO_USER"
 
+	errcho "Middleman port to connect to this machine: [$m_port]"
+	read m_port1
+	[[ ! -z m_port1 ]] && m_port=$m_port1
+
+	errcho "Middleman SSH port: [$m_ssh_port]"
+	read m_ssh_port1
+	[[ ! -z $m_ssh_port1 ]] && m_ssh_port=$m_ssh_port1
+
 	errcho "Let's try to copy the public key over..."
-	su -c "ssh-copy-id -i $key_path $middleman@$kitty" root >/dev/null 2>/dev/null
+	su -c "ssh-copy-id -p $m_ssh_port -i $key_path $middleman@$kitty" root >/dev/null 2>/dev/null
 	
 	echo "#!/bin/bash
 	export AUTOSSH_PORT=0
 	export AUTOSSH_GATETIME=0
-	autossh $prefix -- -o 'ControlPath none' -i $key_path -R $m_port:localhost:22 $middleman@$kitty -N $suffix 2>/var/log/tarspoon/$tun-err.log
+	autossh $prefix -- -o 'ControlPath none' -p $m_ssh_port -i $key_path -R $m_port:localhost:22 $middleman@$kitty -N $suffix 2>/var/log/tarspoon/$tun-err.log
 	" > /usr/local/bin/tun_$tun
 
 	chmod +x /usr/local/bin/tun_$tun

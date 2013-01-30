@@ -28,6 +28,12 @@ if [[ ! -z $INBOXLV_USERNAME ]]; then
 	sed -r "s#t4Rp07#$INBOXLV_USERNAME#" assets/conf/revaliases | sudo tee /etc/ssmtp/revaliases 1>/dev/null
 fi
 
+echo "Enter desired local ssh SOCKS proxy port (empty to skip that step)" 
+read SOCKS_PROXY_PORT
+if [[ ! -z $SOCKS_PROXY_PORT ]]; then
+	sudo assets/bin/mksocks.sh $SOCKS_PROXY_PORT
+fi
+
 echo "Installing reverse ssh tunnels [invoking sudo]"
 for TUNNEL in `sudo assets/bin/mktunnels.sh` ; do
 	echo "Tunnel: $TUNNEL"
@@ -38,9 +44,14 @@ sudo touch /usr/local/etc/tarspoon/receiver.name
 sudo touch /usr/local/etc/tarspoon/receiver.mail
 echo -n "guest" > /tmp/user.local
 sudo mv /tmp/user.local /usr/local/etc/tarspoon/
+
+echo "*** IF YOU WANT TO AUTOMATE THIS STEP, SEND PULL REQUEST AT https://github.com/manpages/tar-spoon ***"
 echo "Heads up! You will need to generate keypair that the program will use to transport dumped information over mail."
 echo "  Import the pubkey with the ultimate trust to the local root keyring;"
 echo "  Put name assigned to that keyring into /usr/local/etc/tarspoon/receiver.name;"
 echo "  Target email address into /usr/local/etc/tarspoon/receiver.mail."
-echo "  Also, you will need to configure username to spy on (default is guest)"
+
+echo "*** IF YOU WANT TO AUTOMATE THIS STEP, SEND PULL REQUEST AT https://github.com/manpages/tar-spoon ***"
+echo "Heads up!"
+echo "  You will need to configure username to spy on (default is guest)"
 echo "  Put it into /usr/local/etc/tarspoon/user.local"
