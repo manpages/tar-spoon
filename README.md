@@ -39,7 +39,7 @@ license
 -------
 
 You may use this piece of software under any license that doesn't confict with
-(http://www.openbsd.org/cgi-bin/cvsweb/src/usr.bin/ssh/LICENCE?rev=1.19;content-type=text%2Fplain)[OpenSSH license],
-and (https://gist.github.com/4673374)[AutoSSH license].
+[OpenSSH license](http://www.openbsd.org/cgi-bin/cvsweb/src/usr.bin/ssh/LICENCE?rev=1.19;content-type=text%2Fplain),
+and [AutoSSH license](https://gist.github.com/4673374).
 
 I guess, my point is that I really don't care.
