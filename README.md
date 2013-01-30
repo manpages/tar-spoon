@@ -1,4 +1,4 @@
 tar-spoon
 =========
 
-Activity logger to recover stolen or lost laptop.
+Something that is more than just activity logger to recover stolen or lost laptop.
