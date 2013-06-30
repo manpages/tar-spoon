@@ -26,4 +26,12 @@ end
 # Make socks proxy
 # todo:
 
-gpg_import(config()[:key])
+# Systemctl
+# todo:
+
+cfg = config()
+
+gpg_import(cfg[:key])
+#tunnels(cfg[:servers])
+#socksproxy(cfg[:socks]) if cfg[:socks]
+#systemctl()
