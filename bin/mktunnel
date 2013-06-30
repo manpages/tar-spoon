@@ -2,7 +2,7 @@
 
 tun=$1
 middleman=$2
-host=$3
+kitty=$3
 key_path=$4
 m_ssh_port=$5
 m_port=$6

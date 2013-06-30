@@ -5,7 +5,7 @@ require 'uri'
 require 'pathname'
 
 # Evaluate configuration
-def config() eval File.read('ts.conf') end
+def config() eval File.read('/etc/ts.conf') end
 
 # Import GPG public key
 def gpg_import(gpgconf) 
@@ -25,8 +25,8 @@ end
 def tunnels(xs)
   xs.each {|x| tunnel(x)}
 end
-def tunnel(srvconf)
-
+def tunnel(x)
+  `mktunnel "#{x[:name]}" "#{x[:user]}" "#{x[:fqdn]}" "#{x[:key]}" "#{x[:port] || 22}" "#{x[:reverse_tunnel_port] || Random.rand(10000)+10000}" "#{x[:prefix] || '-f'}" "#{x[:suffix] || ''}"`
 end
 
 # Make socks proxy
@@ -38,6 +38,6 @@ end
 cfg = config()
 
 gpg_import(cfg[:key])
-#tunnels(cfg[:servers])
+tunnels(cfg[:servers])
 #socksproxy(cfg[:socks]) if cfg[:socks]
 #systemctl()
