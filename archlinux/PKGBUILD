@@ -27,5 +27,8 @@ build() {
 
 package() {
 	cd "${srcdir}/${_pkgname}"
-  make install 
+  mkdir -p ${pkgdir}/etc/
+  cp ts.conf ${pkgdir}/etc/
+  mkdir -p ${pkgdir}/usr/bin/
+  cp bin/* ${pkgdir}/usr/bin/
 }
