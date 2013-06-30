@@ -22,8 +22,7 @@ prepare() {
 }
 
 build() {
-	cd "${srcdir}/${_pkgname}"
-  ./install
+  echo "Edit /etc/ts.conf then run tarspoon-reconfigure. That's it."
 }
 
 package() {

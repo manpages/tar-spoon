@@ -5,7 +5,7 @@ require 'uri'
 require 'pathname'
 
 # Evaluate configuration
-def config() eval File.read('/etc/ts.conf') end
+def config() eval File.read('ts.conf') end
 
 # Import GPG public key
 def gpg_import(gpgconf) 
@@ -16,12 +16,18 @@ def gpg_import(gpgconf)
     puts "[#{$0}] Downloading key from #{gpgconf[:url].to_s}"
     filename = Pathname(gpgconf[:url].path).basename.to_s
     `wget -O /tmp/#{filename} #{gpgconf[:url].to_s} &&
-     gpg --import /tmp/#{filename}`
+     gpg --import /tmp/#{filename}
+     rm -vf "/tmp/#{filename}"`
   end
 end
 
 # For each server make a tunnel script
-# todo:
+def tunnels(xs)
+  xs.each {|x| tunnel(x)}
+end
+def tunnel(srvconf)
+
+end
 
 # Make socks proxy
 # todo:
