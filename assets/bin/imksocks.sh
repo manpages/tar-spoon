@@ -26,12 +26,6 @@ echo "Remote user [$r_user]:"
 read r_user1
 [[ ! -z $r_user1 ]] && r_user=$r_user1
 
-echo "#!/bin/bash
-		export AUTOSSH_PORT=0
-		export AUTOSSH_GATETIME=0
-		autossh -vv -- -o 'ControlPath none' -p ${r_ssh_port} -i ${k_path} -D ${l_socks_port} ${r_user}@${r_host} -N > /var/log/tarspoon/socks.log 2>/var/log/tarspoon/socks-err.log
-" > /usr/local/bin/tun__ssh_socks_proxy
-
-chmod +x /usr/local/bin/tun__ssh_socks_proxy
+mksocks $r_user $r_host $k_path $r_ssh_port $l_socks_port
 
 echo "SOCKS proxy configured. That was a triumph."

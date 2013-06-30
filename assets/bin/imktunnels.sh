@@ -41,13 +41,8 @@ function mktun {
 	errcho "Let's try to copy the public key over..."
 	su -c "ssh-copy-id -p $m_ssh_port -i $key_path $middleman@$kitty" root >/dev/null 2>/dev/null
 	
-	echo "#!/bin/bash
-	export AUTOSSH_PORT=0
-	export AUTOSSH_GATETIME=0
-	autossh $prefix -- -o 'ControlPath none' -p $m_ssh_port -i $key_path -R $m_port:localhost:22 $middleman@$kitty -N $suffix 2>/var/log/tarspoon/$tun-err.log
-	" > /usr/local/bin/tun_$tun
+  mktunnel $tun $middleman $kitty $key_path $m_ssh_port $m_port $prefix $suffix  
 
-	chmod +x /usr/local/bin/tun_$tun
 }
 
 mkdir -p /var/log/tarspoon

@@ -1,0 +1,18 @@
+#!/bin/bash
+
+tun=$1
+middleman=$2
+host=$3
+key_path=$4
+m_ssh_port=$5
+m_port=$6
+prefix=$7
+suffix=$8
+
+echo "#!/bin/bash
+export AUTOSSH_PORT=0
+export AUTOSSH_GATETIME=0
+autossh $prefix -- -o 'ControlPath none' -p $m_ssh_port -i $key_path -R $m_port:localhost:22 $middleman@$kitty -N $suffix 2>/var/log/tarspoon/$tun-err.log
+" > /usr/local/bin/tun_$tun
+
+chmod +x /usr/local/bin/tun_$tun
