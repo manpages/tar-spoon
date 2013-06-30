@@ -6,9 +6,7 @@ STATUS=""
 TUNS=$(ls /usr/local/bin | grep tun_)
 PHOTO_PACKAGE_ROOT="/tmp/yaourt-tmp-root/scrot/package/"
 
-NAME="$(cat /usr/local/etc/tarspoon/receiver.name)"
-MAIL="$(cat /usr/local/etc/tarspoon/receiver.mail)"
-L_USER="$(cat /usr/local/etc/tarspoon/user.local)"
+L_USER="guest"
 
 function cheese {
 	sleep $(($1*$1*112))

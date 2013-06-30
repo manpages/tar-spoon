@@ -6,7 +6,7 @@ After=wicd.service
 
 [Service]
 Type=simple
-ExecStart=/usr/local/bin/tarspoon 2>/var/log/tarspoon/tarspoon.log
+ExecStart=/usr/bin/tarspoon 2>/var/log/tarspoon/tarspoon.log
 
 [Install]
 WantedBy=multi-user.target
