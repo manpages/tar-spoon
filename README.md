@@ -35,6 +35,16 @@ logkeys todo
  + Fork it
   - Add sane USB-keyboard support
 
+adding middleman user on remote
+---
+
+```
+  useradd -md /home/middleman -N -c "Middleman account" middleman
+  passwd middleman
+  # now do ssh-copy-id from localhost to remote
+  passwd -d middleman
+```
+
 license
 -------
 
