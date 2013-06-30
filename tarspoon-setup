@@ -1,0 +1,4 @@
+#!/usr/bin/env ruby
+# Sets up tarspoon
+
+def config() eval File.read('/etc/ts.conf') end
