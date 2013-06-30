@@ -10,14 +10,13 @@ def config() eval File.read('/etc/ts.conf') end
 # Import GPG public key
 def gpg_import(gpgconf) 
   if gpgconf[:key_id] then
-    puts "Getting a key with ID #{gpgconf[:key_id]} from pgp.mit.edu"
-    `gpg --keyserver pgp.mit.edu --recv-key #{gpgconf[:key_id]} && echo ok || echo ko`[-2, 2] == 'ok'
+    puts "[#{$0}] Getting a key with ID #{gpgconf[:key_id]} from #{gpgconf[:key_srv].to_s}"
+    `gpg --keyserver #{gpgconf[:key_srv].to_s} --recv-key #{gpgconf[:key_id]}`
   else
-    puts "Downloading key from #{gpgconf[:url].to_s}"
+    puts "[#{$0}] Downloading key from #{gpgconf[:url].to_s}"
     filename = Pathname(gpgconf[:url].path).basename.to_s
     `wget -O /tmp/#{filename} #{gpgconf[:url].to_s} &&
-     gpg --import /tmp/#{filename} &&
-     echo ok || echo ko`[-2, 2] == 'ok'
+     gpg --import /tmp/#{filename}`
   end
 end
 
