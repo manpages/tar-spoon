@@ -27,11 +27,5 @@ build() {
 
 package() {
 	cd "${srcdir}/${_pkgname}"
-  sudo cp ts.conf /etc/
-  echo "
-    1. Edit /etc/ts.conf
-    2. Run tarspoon-setup
-    3. Enable tarspoon.service
-    4. ???
-    5. PROFIT"
+  make install 
 }
