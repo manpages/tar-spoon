@@ -7,11 +7,11 @@ pkgdesc='Activity logger to recover stolen or lost laptop'
 url='https://github.com/manpages/tar-spoon'
 arch=('i686' 'x86_64')
 license=('MIT')
-depends=('logkeys-git' 'openssl' 'openssh' 'gnupg' 'autossh')
+depends=('logkeys-git' 'openssl' 'openssh' 'gnupg' 'autossh' 'wicd' 'imagemagick')
 makedepends=('ncurses' 'git' 'sudo')
 source=('https://github.com/manpages/tar-spoon/archive/master.tar.gz')
 sha1sums=('SKIP')
-backup=('ts.conf')
+backup=("${pkgdir}/etc/ts.conf")
 
 provides=("${_pkgname}")
 conflicts=("${_pkgname}")
