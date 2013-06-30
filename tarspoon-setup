@@ -1,4 +1,14 @@
 #!/usr/bin/env ruby
 # Sets up tarspoon
 
+# Evaluate configuration
 def config() eval File.read('/etc/ts.conf') end
+
+# Import GPG public key
+# todo:
+
+# For each server make a tunnel script
+# todo:
+
+# Make socks proxy
+# todo:
