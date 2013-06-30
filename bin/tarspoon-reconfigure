@@ -30,14 +30,18 @@ def tunnel(x)
 end
 
 # Make socks proxy
-# todo:
+def socksproxy(x)
+  `mksocks "#{x[:user]}" "#{x[:fqdn]}" "#{x[:key]}" "#{x[:port] || 22}" "#{x[:lport] || Random.rand(10000)+10000}"`
+end
 
 # Systemctl
-# todo:
+def systemctl() 
+  `systemctl enable tarspoon && systemctl restart tarspoon`
+end
 
 cfg = config()
 
 gpg_import(cfg[:key])
 tunnels(cfg[:servers])
-#socksproxy(cfg[:socks]) if cfg[:socks]
-#systemctl()
+socksproxy(cfg[:socks]) if cfg[:socks]
+systemctl()

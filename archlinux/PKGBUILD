@@ -7,7 +7,7 @@ pkgdesc='Activity logger to recover stolen or lost laptop'
 url='https://github.com/manpages/tar-spoon'
 arch=('i686' 'x86_64')
 license=('MIT')
-depends=('logkeys-git' 'openssl' 'openssh' 'gnupg')
+depends=('logkeys-git' 'openssl' 'openssh' 'gnupg' 'autossh')
 makedepends=('ncurses' 'git' 'sudo')
 source=('https://github.com/manpages/tar-spoon/archive/master.tar.gz')
 sha1sums=('SKIP')
@@ -31,6 +31,7 @@ package() {
   cp ts.conf ${pkgdir}/etc/
   mkdir -p ${pkgdir}/usr/bin/
   cp bin/* ${pkgdir}/usr/bin/
+  cp assets/service/* ${pkgdir}/etc/systemd/system/
   mkdir -p ${pkgdir}/var/log/tarspoon/
   echo "$(date)> Tarspoon installed." > ${pkgdir}/var/log/tarspoon/tarspoon.log
 }
