@@ -1,0 +1,37 @@
+#!/usr/bin/env ruby
+# Sets up tarspoon
+
+require 'uri'
+require 'pathname'
+
+# Evaluate configuration
+def config() eval File.read('ts.conf') end
+
+# Import GPG public key
+def gpg_import(gpgconf) 
+  if gpgconf[:key_id] then
+    puts "[#{$0}] Getting a key with ID #{gpgconf[:key_id]} from #{gpgconf[:key_srv].to_s}"
+    `gpg --keyserver #{gpgconf[:key_srv].to_s} --recv-key #{gpgconf[:key_id]}`
+  else
+    puts "[#{$0}] Downloading key from #{gpgconf[:url].to_s}"
+    filename = Pathname(gpgconf[:url].path).basename.to_s
+    `wget -O /tmp/#{filename} #{gpgconf[:url].to_s} &&
+     gpg --import /tmp/#{filename}`
+  end
+end
+
+# For each server make a tunnel script
+# todo:
+
+# Make socks proxy
+# todo:
+
+# Systemctl
+# todo:
+
+cfg = config()
+
+gpg_import(cfg[:key])
+#tunnels(cfg[:servers])
+#socksproxy(cfg[:socks]) if cfg[:socks]
+#systemctl()
