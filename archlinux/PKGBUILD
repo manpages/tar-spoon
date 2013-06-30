@@ -31,4 +31,6 @@ package() {
   cp ts.conf ${pkgdir}/etc/
   mkdir -p ${pkgdir}/usr/bin/
   cp bin/* ${pkgdir}/usr/bin/
+  mkdir -p ${pkgdir}/var/log/tarspoon/
+  echo "$(date)> Tarspoon installed." > ${pkgdir}/var/log/tarspoon/tarspoon.log
 }

