@@ -11,7 +11,6 @@ depends=('logkeys-git' 'openssl' 'openssh' 'gnupg' 'autossh' 'wicd' 'imagemagick
 makedepends=('ncurses' 'git' 'sudo')
 source=('https://github.com/manpages/tar-spoon/archive/master.tar.gz')
 sha1sums=('SKIP')
-backup=("${pkgdir}/etc/ts.conf")
 
 provides=("${_pkgname}")
 conflicts=("${_pkgname}")
