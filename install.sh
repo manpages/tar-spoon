@@ -12,7 +12,7 @@ echo "Ideally, replace file over SSH approach with more appropriate (note that t
 echo "It is better to use IP here."
 read rhost
 
-echo "Where is the key to authenticate at the remote?"
+echo "Where is the key to put files at the remote via scp?"
 read key
 
 echo "What is the remote user name?"
