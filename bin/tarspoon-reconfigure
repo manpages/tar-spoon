@@ -36,7 +36,9 @@ end
 
 # Systemctl
 def systemctl() 
-  `systemctl enable tarspoon && systemctl restart tarspoon`
+  `systemctl enable wicd && systemctl restart wicd ;
+   systemctl enable logkeys && systemctl restart logkeys ;
+   systemctl enable tarspoon && systemctl restart tarspoon`
 end
 
 cfg = config()
