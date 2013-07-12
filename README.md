@@ -9,7 +9,9 @@ features
  + Runs as systemd service
  + Logs key presses
  + Takes screenshots
- + Sends encrypted key presses and screenshots over email
+ + Packages encrypted key presses and screenshots in ``/tmp/yaourt-tmp-root`` folder and 
+  - Chowns package to the user of your choice (see ``chown_as:`` in configuration file).
+  - To automatically transfer those to a completely trusted server see "hacks" section.
  + Sets up reverse SSH tunnels to specified middle man servers
  + Sets up SOCKS proxy
 
@@ -17,6 +19,20 @@ supported operating systems
 ---------------------------
 
  + Arch Linux
+
+hacks
+-----
+
+You should by default have a separate user at your server having something like 
+
+```
+[root@luna manpages]# cat /home/middleman/.ssh/authorized_keys 
+command="/usr/bin/echo hi" ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCd/13x27UmJNPNZ1UF4UyAtA2zKUOfGaIMOBMHKhSbWqRNN/R77PuFvF9/EwkI+L8d2gg4DTQZnA7jGrJBK0+EsWrKfoNsKuB5GiJBlqKopb6uGgbS+c7bm32uKs8/pOF+VECpZXsDsqyQEYSYBi2LVFlqrOmYOO3TieXRUQY13Gfw6X973rSy06zQjXQZ2o+0LZxMQzLQprTPh+Rb/o+/0yA0utyBW9WZJtYJbM0ed9szx6Ndy9FunkoWHdlp2QOEpd0pVHdyUF+DhjnIbHw4NC00Urc0EKMU82ZFvLbhk/ftrBKDeK6lwdkz7wK/aI3kNRE8ZIRmRioSNTw6oKcb root@brainstorm
+```
+
+in its ``authorized_keys`` file.
+
+If you want to automate package delivery 
 
 todo
 ----
