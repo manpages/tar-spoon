@@ -1,6 +1,6 @@
 function no_host {
 	echo "No host given, aborting. You may later run 
-	  sudo /path/to/tarspoon/assets/bin/mksocks.sh
+	  sudo /path/to/tarspoon/assets/bin/imksocks.sh
 	to configure SOCKS proxy." && exit
 }
 r_ssh_port=22
